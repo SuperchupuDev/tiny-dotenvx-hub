@@ -1,5 +1,4 @@
 import { setTimeout as sleep } from 'node:timers/promises';
-import openBrowser from 'open';
 
 import confirm from './../../shared/confirm.js';
 import { createSpinner } from './../../shared/createSpinner.js';
@@ -10,6 +9,7 @@ import { gitRoot } from '../../lib/gitRoot.js';
 import { gitUrl } from '../../lib/gitUrl.js';
 import { isGitRepo } from '../../lib/isGitRepo.js';
 import isGithub from '../../lib/isGithub.js';
+import { open as openBrowser } from '../../lib/open/index.js';
 
 const spinner = createSpinner('opening');
 
@@ -60,7 +60,7 @@ export async function open() {
   if (answer) {
     spinner.start();
     await sleep(500); // better dx
-    await openBrowser(openUrl);
+    openBrowser(openUrl);
     spinner.succeed(`opened [${usernameName}]`);
   }
 }

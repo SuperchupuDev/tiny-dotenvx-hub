@@ -1,6 +1,6 @@
 import { setTimeout as sleep } from 'node:timers/promises';
-import openBrowser from 'open';
 
+import { open } from '../../lib/open/index.js';
 import confirm from './../../shared/confirm.js';
 import { createSpinner } from './../../shared/createSpinner.js';
 import { logger } from './../../shared/logger.js';
@@ -35,7 +35,7 @@ export async function logout() {
   if (answer) {
     spinner.start();
     await sleep(500); // better dx
-    await openBrowser(logoutUrl);
+    open(logoutUrl);
     spinner.done(`logged off browser${usernamePart}`);
   }
 }

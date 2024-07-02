@@ -1,6 +1,6 @@
 {
   "name": "tiny-dotenvx-hub",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "A tiny and modern alternative to the deprecated dotenvx-ext-hub",
   "type": "module",
   "scripts": {
@@ -33,9 +33,7 @@
   "dependencies": {
     "@clack/core": "^0.3.4",
     "commander": "^12.1.0",
-    "is-wsl": "^3.1.0",
-    "open": "^10.1.0",
-    "undici": "^6.19.2"
+    "is-wsl": "^3.1.0"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3"

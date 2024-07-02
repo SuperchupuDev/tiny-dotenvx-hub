@@ -1,7 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { setTimeout as sleep } from 'node:timers/promises';
-import { request } from 'undici';
 
 import { createSpinner } from './../../shared/createSpinner.js';
 import { logger } from './../../shared/logger.js';
@@ -84,7 +83,7 @@ export async function push(_directory) {
     .replace(/\\/g, '/'); // smartly determine path/to/.env.keys file from repository root - where user is cd-ed inside a folder or at repo root
 
   try {
-    const response = await request(pushUrl, {
+    const response = await fetch(pushUrl, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${oauthToken}`,
@@ -97,7 +96,7 @@ export async function push(_directory) {
       })
     });
 
-    const responseData = await response.body.json();
+    const responseData = await response.json();
 
     if (response.statusCode >= 400) {
       logger.http(responseData);

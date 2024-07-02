@@ -1,6 +1,6 @@
 # tiny-dotenvx-hub
 
-My approach to `dotenvx-ext-hub` but cleaner and with 90% less dependencies, making use of the most recent cutting-edge Node APIs.
+My approach to `dotenvx-ext-hub` but cleaner and with 95% less dependencies, making use of the most recent cutting-edge Node APIs.
 
 Made for personal use as i don't want to install a whole 133 dependencies just for this extension.
 

@@ -1,6 +1,5 @@
-import open from 'open';
-import { request } from 'undici';
 import * as clipboardy from '../../lib/clipboardy.js';
+import { open } from '../../lib/open/index.js';
 
 import confirm from './../../shared/confirm.js';
 import { createSpinner } from './../../shared/createSpinner.js';
@@ -24,7 +23,7 @@ async function pollTokenUrl(tokenUrl, deviceCode, interval) {
   logger.http(`POST ${tokenUrl} with deviceCode ${deviceCode} at interval ${interval}`);
 
   try {
-    const response = await request(tokenUrl, {
+    const response = await fetch(tokenUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -36,7 +35,7 @@ async function pollTokenUrl(tokenUrl, deviceCode, interval) {
       })
     });
 
-    const responseData = await response.body.json();
+    const responseData = await response.json();
 
     logger.http(responseData);
 
@@ -77,7 +76,7 @@ export async function login() {
   const tokenUrl = `${hostname}/oauth/token`;
 
   try {
-    const response = await request(deviceCodeUrl, {
+    const response = await fetch(deviceCodeUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -85,7 +84,7 @@ export async function login() {
       body: JSON.stringify({ client_id: OAUTH_CLIENT_ID })
     });
 
-    const responseData = await response.body.json();
+    const responseData = await response.json();
 
     if (response.statusCode >= 400) {
       logger.http(responseData);
@@ -113,7 +112,7 @@ export async function login() {
     });
 
     if (answer) {
-      await open(verificationUri);
+      open(verificationUri);
     }
     spinner.start();
   } catch (error) {
