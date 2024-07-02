@@ -7,12 +7,12 @@ import { setLogLevel } from '../shared/logger.js';
 import * as store from '../shared/store.js';
 
 import { login } from './actions/login.js';
-import { push } from './actions/push.js';
-import { pull } from './actions/pull.js';
-import { token } from './actions/token.js';
-import { open } from './actions/open.js';
-import { status } from './actions/status.js';
 import { logout } from './actions/logout.js';
+import { open } from './actions/open.js';
+import { pull } from './actions/pull.js';
+import { push } from './actions/push.js';
+import { status } from './actions/status.js';
+import { token } from './actions/token.js';
 
 const program = new Command();
 
