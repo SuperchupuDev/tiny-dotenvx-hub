@@ -113,5 +113,5 @@ export async function push(_directory) {
   }
 
   spinner.succeed(`pushed [${usernameName}]`);
-  logger.help2('ℹ run [dotenvx ext hub open] to view on hub');
+  logger.help2('ℹ run [env-hub open] to view on hub');
 }

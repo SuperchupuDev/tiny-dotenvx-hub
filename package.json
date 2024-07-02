@@ -1,6 +1,6 @@
 {
   "name": "tiny-dotenvx-hub",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A tiny and modern alternative to the deprecated dotenvx-ext-hub",
   "type": "module",
   "scripts": {
