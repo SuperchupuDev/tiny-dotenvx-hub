@@ -1,12 +1,12 @@
-const { ConfirmPrompt } = require('@clack/core')
+import { ConfirmPrompt } from '@clack/core';
 
-module.exports = (opts) => {
+export default opts => {
   return new ConfirmPrompt({
     active: 'Y',
     inactive: 'N',
     initialValue: true,
-    render () {
-      return `${opts.message} (${this.value ? 'Y/n' : 'y/N'})`
+    render() {
+      return `${opts.message} (${this.value ? 'Y/n' : 'y/N'})`;
     }
-  }).prompt()
-}
+  }).prompt();
+};

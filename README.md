@@ -1,62 +1,28 @@
-# dotenvx-ext-hub
+# tiny-dotenvx-hub
 
-> 🚫 DEPRECATED: to be replaced by [dotenvx pro]
+My approach to `dotenvx-ext-hub` but cleaner and with 90% less dependencies, making use of the most recent cutting-edge Node APIs.
 
-## Quickstart [![npm version](https://img.shields.io/npm/v/@dotenvx/dotenvx-ext-hub.svg)](https://www.npmjs.com/package/@dotenvx/dotenvx-ext-hub)
+Made for personal use as i don't want to install a whole 133 dependencies just for this extension.
 
-Extend `dotenv` with hub (deprecated).
-
-```sh
-npm install @dotenvx/dotenvx-ext-hub --save
-```
-&nbsp;
-
-or install globally
-
-<details><summary>with brew 🍺</summary><br>
+You can use it if you want though, it's just not official (and doesn't include binary releases) Just make sure you have Node 22.0.0 or higher.
 
 ```sh
-brew install dotenvx/brew/dotenvx-ext-hub
-dotenvx ext hub help
+npm i -D fast-dotenvx-hub
 ```
-
-&nbsp;
-
-</details>
-
-<details><summary>with curl 🌐 </summary><br>
-
-```sh
-curl -sfS https://dotenvx.sh/ext/hub | sh
-dotenvx ext hub help
-```
-
-&nbsp;
-
-</details>
-
-<details><summary>or with github releases 🐙</summary><br>
-
-```sh
-curl -L -o dotenvx-ext-hub.tar.gz "https://github.com/dotenvx/dotenvx-ext-hub/releases/latest/download/dotenvx-ext-hub-$(uname -s)-$(uname -m).tar.gz"
-tar -xzf dotenvx-ext-hub.tar.gz
-./dotenvx-ext-hub help
-```
-
-</details>
-
-
-&nbsp;
 
 ## Usage
 
 ```sh
-$ dotenvx ext hub
-Usage: @dotenvx/dotenvx-ext-hub [options] [command]
+$ env-hub
+Usage: env-hub [options] [command]
 
-🚫 DEPRECATED: to be replaced by [dotenvx pro]
+A tiny and modern alternative to the deprecated dotenvx-ext-hub
 
 Options:
+  -l, --log-level <level>     set log level (default: "info")
+  -q, --quiet                 sets log level to error
+  -v, --verbose               sets log level to verbose
+  -d, --debug                 sets log level to debug
   -V, --version               output the version number
   -h, --help                  display help for command
 
@@ -69,5 +35,4 @@ Commands:
   status                      display logged in user
   logout [options]            log out this machine from dotenvx hub
   help [command]              display help for command
-
 ```

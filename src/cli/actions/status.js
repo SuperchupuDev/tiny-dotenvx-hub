@@ -1,8 +1,11 @@
-const store = require('./../../shared/store')
-const { logger } = require('./../../shared/logger')
+import { logger } from './../../shared/logger.js';
+import { getHostname, getUsername } from './../../shared/store.js';
 
-async function status () {
-  logger.info(`logged in to ${store.getHostname()} as ${store.getUsername()}`)
+export function status() {
+  const username = getUsername();
+  if (!username) {
+    logger.info('not logged in');
+    return;
+  }
+  logger.info(`logged in to ${getHostname()} as ${getUsername()}`);
 }
-
-module.exports = status

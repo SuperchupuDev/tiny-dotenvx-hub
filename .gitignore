@@ -1,21 +1,26 @@
-.DS_Store
-.nyc_output
-.tap
-coverage/
+# Packages
 node_modules/
-dist/*
-.env*
-!.env.vault
-tests/tmp
 
-# for test purposes
-!tests/.env
-!tests/.env.expand
-!tests/.env.eval
-!tests/.env.local
-!tests/.env.multiline
-!tests/.env.vault
-!tests/monorepo/**/.env*
-spec/tmp/*
-!spec/tmp/.gitkeep
+# Log files
+logs/
+*.log
+npm-debug.log*
 
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Env
+.env
+
+# Miscellaneous
+.tmp/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+.DS_Store
+.turbo
+tsconfig.tsbuildinfo
+coverage/

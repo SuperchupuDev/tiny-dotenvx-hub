@@ -1,9 +1,7 @@
-const store = require('./../../shared/store')
-const { logger } = require('./../../shared/logger')
+import { logger } from './../../shared/logger.js';
+import { configPath, getToken } from './../../shared/store.js';
 
-async function token () {
-  logger.debug(store.configPath())
-  logger.blank(store.getToken())
+export function token() {
+  logger.debug(configPath());
+  logger.info(getToken());
 }
-
-module.exports = token

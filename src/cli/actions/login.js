@@ -1,28 +1,27 @@
-const open = require('open')
-const { request } = require('undici')
-const clipboardy = require('./../../lib/helpers/clipboardy')
+import open from 'open';
+import { request } from 'undici';
+import * as clipboardy from '../../lib/clipboardy.js';
 
-const confirm = require('./../../shared/confirm')
-const { createSpinner } = require('./../../shared/createSpinner')
-const store = require('./../../shared/store')
-const { logger } = require('./../../shared/logger')
+import confirm from './../../shared/confirm.js';
+import { createSpinner } from './../../shared/createSpinner.js';
+import { logger } from './../../shared/logger.js';
+import * as store from './../../shared/store.js';
 
-const OAUTH_CLIENT_ID = 'oac_dotenvxcli'
+const OAUTH_CLIENT_ID = 'oac_dotenvxcli';
 
-const spinner = createSpinner('waiting on user authorization')
-
-const formatCode = function (str) {
-  const parts = []
+const spinner = createSpinner('waiting on user authorization');
+const formatCode = str => {
+  const parts = [];
 
   for (let i = 0; i < str.length; i += 4) {
-    parts.push(str.substring(i, i + 4))
+    parts.push(str.substring(i, i + 4));
   }
 
-  return parts.join('-')
-}
+  return parts.join('-');
+};
 
-async function pollTokenUrl (tokenUrl, deviceCode, interval) {
-  logger.http(`POST ${tokenUrl} with deviceCode ${deviceCode} at interval ${interval}`)
+async function pollTokenUrl(tokenUrl, deviceCode, interval) {
+  logger.http(`POST ${tokenUrl} with deviceCode ${deviceCode} at interval ${interval}`);
 
   try {
     const response = await request(tokenUrl, {
@@ -35,47 +34,47 @@ async function pollTokenUrl (tokenUrl, deviceCode, interval) {
         device_code: deviceCode,
         grant_type: 'urn:ietf:params:oauth:grant-type:device_code'
       })
-    })
+    });
 
-    const responseData = await response.body.json()
+    const responseData = await response.body.json();
 
-    logger.http(responseData)
+    logger.http(responseData);
 
     if (response.statusCode >= 400) {
       // continue polling if authorization_pending
       if (responseData.error === 'authorization_pending') {
-        setTimeout(() => pollTokenUrl(tokenUrl, deviceCode, interval), interval * 1000)
+        setTimeout(() => pollTokenUrl(tokenUrl, deviceCode, interval), interval * 1000);
       } else {
-        spinner.start()
-        spinner.fail(responseData.error_description)
-        process.exit(1)
+        spinner.start();
+        spinner.fail(responseData.error_description);
+        process.exit(1);
       }
     }
 
     if (responseData.access_token) {
-      spinner.start()
-      store.setToken(responseData.full_username, responseData.access_token)
-      store.setHostname(responseData.hostname)
-      spinner.succeed(`logged in as ${responseData.username}`)
-      process.exit(0)
+      spinner.start();
+      store.setToken(responseData.full_username, responseData.access_token);
+      store.setHostname(responseData.hostname);
+      spinner.succeed(`logged in as ${responseData.username}`);
+      process.exit(0);
     } else {
       // continue polling if no access_token. shouldn't ever get here it server is implemented correctly
-      setTimeout(() => pollTokenUrl(tokenUrl, deviceCode, interval), interval * 1000)
+      setTimeout(() => pollTokenUrl(tokenUrl, deviceCode, interval), interval * 1000);
     }
   } catch (error) {
-    spinner.start()
-    spinner.fail(error.toString())
-    process.exit(1)
+    spinner.start();
+    spinner.fail(error.toString());
+    process.exit(1);
   }
 }
 
-async function login () {
-  const options = this.opts()
-  logger.debug(`options: ${JSON.stringify(options)}`)
+export async function login() {
+  const options = this.opts();
+  logger.debug(`options: ${JSON.stringify(options)}`);
 
-  const hostname = options.hostname
-  const deviceCodeUrl = `${hostname}/oauth/device/code`
-  const tokenUrl = `${hostname}/oauth/token`
+  const hostname = options.hostname;
+  const deviceCodeUrl = `${hostname}/oauth/device/code`;
+  const tokenUrl = `${hostname}/oauth/token`;
 
   try {
     const response = await request(deviceCodeUrl, {
@@ -84,42 +83,42 @@ async function login () {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({ client_id: OAUTH_CLIENT_ID })
-    })
+    });
 
-    const responseData = await response.body.json()
+    const responseData = await response.body.json();
 
     if (response.statusCode >= 400) {
-      logger.http(responseData)
+      logger.http(responseData);
 
-      spinner.start()
-      spinner.fail(responseData.error_description)
-      process.exit(1)
+      spinner.start();
+      spinner.fail(responseData.error_description);
+      process.exit(1);
     }
 
-    const deviceCode = responseData.device_code
-    const userCode = responseData.user_code
-    const verificationUri = responseData.verification_uri
-    const interval = responseData.interval
+    const deviceCode = responseData.device_code;
+    const userCode = responseData.user_code;
+    const verificationUri = responseData.verification_uri;
+    const interval = responseData.interval;
 
-    try { clipboardy.writeSync(userCode) } catch (_e) {}
+    await clipboardy.write(userCode).catch(() => null);
 
     // qrcode.generate(verificationUri, { small: true }) // too verbose
 
     // begin polling
-    pollTokenUrl(tokenUrl, deviceCode, interval)
+    pollTokenUrl(tokenUrl, deviceCode, interval);
 
     // optionally allow user to open browser
-    const answer = await confirm({ message: `press Enter to open [${verificationUri}] and enter code [${formatCode(userCode)}]...` })
+    const answer = await confirm({
+      message: `press Enter to open [${verificationUri}] and enter code [${formatCode(userCode)}]...`
+    });
 
     if (answer) {
-      await open(verificationUri)
+      await open(verificationUri);
     }
-    spinner.start()
+    spinner.start();
   } catch (error) {
-    spinner.start()
-    spinner.fail(error.toString())
-    process.exit(1)
+    spinner.start();
+    spinner.fail(error.toString());
+    process.exit(1);
   }
 }
-
-module.exports = login
