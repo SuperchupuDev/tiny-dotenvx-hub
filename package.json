@@ -24,10 +24,10 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dotenvx/tiny-dotenvx-hub.git"
+    "url": "git+https://github.com/SuperchupuDev/tiny-dotenvx-hub.git"
   },
   "bugs": {
-    "url": "https://github.com/dotenvx/tiny-dotenvx-hub/issues"
+    "url": "https://github.com/SuperchupuDev/tiny-dotenvx-hub/issues"
   },
   "homepage": "https://github.com/SuperchupuDev/tiny-dotenvx-hub#readme",
   "dependencies": {
